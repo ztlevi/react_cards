@@ -5,9 +5,9 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.columnNumber = 4;
+    this.cardLen = 4;
     this.state = {
-      cards: [[], [], [], []],
+      cards: new Array(this.cardLen).fill([]),
     };
   }
 
@@ -20,9 +20,9 @@ class App extends Component {
     }
   }
 
-  changeToRight = (i, element) => {
+  moveToRight = (i, element) => {
     let cards = this.state.cards;
-    if (i > this.columnNumber - 1) return;
+    if (i > this.cardLen - 1) return;
     let idx = cards[i].indexOf(element);
     if (idx > -1) {
       cards[i].splice(idx, 1);
@@ -31,7 +31,7 @@ class App extends Component {
     this.updateCards(cards);
   };
 
-  changeToLeft = (i, element) => {
+  moveToLeft = (i, element) => {
     let cards = this.state.cards;
     console.log(cards);
 
@@ -62,44 +62,40 @@ class App extends Component {
   }
 
   render() {
+    let cardsInfo = [
+      {
+        name: 'Winnie',
+        color: '#8E6E95',
+      },
+      {
+        name: 'Bob',
+        color: '#39A59C',
+      },
+      {
+        name: 'Thomas',
+        color: '#344759',
+      },
+      {
+        name: 'George',
+        color: '#E8741E',
+      },
+    ];
     return (
       <div className="App">
-        <Card
-          name="Winnie"
-          color="#8E6E95"
-          cardIndex={0}
-          changeToLeft={this.changeToLeft}
-          changeToRight={this.changeToRight}
-          pushCard={this.pushCard}
-          cardElements={this.state.cards[0]}
-        />
-        <Card
-          name="Bob"
-          color="#39A59C"
-          cardIndex={1}
-          changeToLeft={this.changeToLeft}
-          pushCard={this.pushCard}
-          changeToRight={this.changeToRight}
-          cardElements={this.state.cards[1]}
-        />
-        <Card
-          name="Thomas"
-          color="#344759"
-          cardIndex={2}
-          changeToLeft={this.changeToLeft}
-          changeToRight={this.changeToRight}
-          pushCard={this.pushCard}
-          cardElements={this.state.cards[2]}
-        />
-        <Card
-          name="George"
-          color="#E8741E"
-          cardIndex={3}
-          changeToLeft={this.changeToLeft}
-          changeToRight={this.changeToRight}
-          pushCard={this.pushCard}
-          cardElements={this.state.cards[3]}
-        />
+        {cardsInfo.map((card, i) => {
+          return (
+            <Card
+              name={card.name}
+              color={card.color}
+              cardIndex={i}
+              cardNumber={this.cardLen}
+              moveToLeft={this.moveToLeft}
+              moveToRight={this.moveToRight}
+              pushCard={this.pushCard}
+              cardElements={this.state.cards[i]}
+            />
+          );
+        })}
       </div>
     );
   }
@@ -117,8 +113,8 @@ class Card extends Component {
         <CardElement
           text={el}
           cardIndex={this.props.cardIndex}
-          changeToLeft={this.props.changeToLeft}
-          changeToRight={this.props.changeToRight}
+          moveToLeft={this.props.moveToLeft}
+          moveToRight={this.props.moveToRight}
           {...this.props}
         />
       );
@@ -154,7 +150,7 @@ class CardElement extends Component {
       cardIndex !== 3 ? (
         <button
           onClick={() =>
-            this.props.changeToRight(this.props.cardIndex, this.props.text)
+            this.props.moveToRight(this.props.cardIndex, this.props.text)
           }
         >
           >
@@ -164,7 +160,7 @@ class CardElement extends Component {
       cardIndex !== 0 ? (
         <button
           onClick={() =>
-            this.props.changeToLeft(this.props.cardIndex, this.props.text)
+            this.props.moveToLeft(this.props.cardIndex, this.props.text)
           }
         >
           {'<'}
