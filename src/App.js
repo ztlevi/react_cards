@@ -120,19 +120,17 @@ class Card extends Component {
       );
     });
     return (
-      <div className="column">
-        <div className="cardPadding">
-          <div
-            className="cardHeader"
-            style={{ backgroundColor: this.props.color }}
-          >
-            {name}
-          </div>
-          {cardElements}
-          <button onClick={() => this.props.pushCard(this.props.cardIndex)}>
-            Add a card
-          </button>
+      <div className="cardColumn">
+        <div
+          className="cardHeader"
+          style={{ backgroundColor: this.props.color }}
+        >
+          {name}
         </div>
+        {cardElements}
+        <button onClick={() => this.props.pushCard(this.props.cardIndex)}>
+          Add a card
+        </button>
       </div>
     );
   }
