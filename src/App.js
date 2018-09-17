@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Card from './Card';
 
 class App extends Component {
   constructor(props) {
@@ -101,68 +102,6 @@ class App extends Component {
             />
           );
         })}
-      </div>
-    );
-  }
-}
-
-class Card extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    let name = this.props.name;
-    let cardElements = this.props.cardElements.map((el, i) => {
-      return (
-        <CardElement
-          text={el}
-          key={i}
-          cardIndex={this.props.cardIndex}
-          moveToLeft={this.props.moveToLeft}
-          moveToRight={this.props.moveToRight}
-          {...this.props}
-        />
-      );
-    });
-    return (
-      <div className="cardColumn">
-        <div className="cardHeader" style={{ backgroundColor: this.props.color }}>
-          {name}
-        </div>
-        {cardElements}
-        <button onClick={() => this.props.pushCard(this.props.cardIndex)}>Add a card</button>
-      </div>
-    );
-  }
-}
-
-class CardElement extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    let cardIndex = this.props.cardIndex;
-
-    let rightButton =
-      cardIndex !== 3 ? (
-        <button onClick={() => this.props.moveToRight(this.props.cardIndex, this.props.text)}>
-          >
-        </button>
-      ) : null;
-    let leftButton =
-      cardIndex !== 0 ? (
-        <button onClick={() => this.props.moveToLeft(this.props.cardIndex, this.props.text)}>
-          {'<'}
-        </button>
-      ) : null;
-
-    return (
-      <div className="cardElement">
-        {leftButton}
-        {this.props.text}
-        {rightButton}
       </div>
     );
   }
