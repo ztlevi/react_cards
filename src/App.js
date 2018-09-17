@@ -6,8 +6,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.cardLen = 4;
+    let cards = new Array();
+    for (let i = 0; i < this.cardLen; i++) {
+      cards.push([]);
+    }
     this.state = {
-      cards: new Array(this.cardLen).fill([]),
+      cards,
     };
   }
 
@@ -85,6 +89,7 @@ class App extends Component {
         {cardsInfo.map((card, i) => {
           return (
             <Card
+              key={i}
               name={card.name}
               color={card.color}
               cardIndex={i}
@@ -112,6 +117,7 @@ class Card extends Component {
       return (
         <CardElement
           text={el}
+          key={i}
           cardIndex={this.props.cardIndex}
           moveToLeft={this.props.moveToLeft}
           moveToRight={this.props.moveToRight}
@@ -121,16 +127,11 @@ class Card extends Component {
     });
     return (
       <div className="cardColumn">
-        <div
-          className="cardHeader"
-          style={{ backgroundColor: this.props.color }}
-        >
+        <div className="cardHeader" style={{ backgroundColor: this.props.color }}>
           {name}
         </div>
         {cardElements}
-        <button onClick={() => this.props.pushCard(this.props.cardIndex)}>
-          Add a card
-        </button>
+        <button onClick={() => this.props.pushCard(this.props.cardIndex)}>Add a card</button>
       </div>
     );
   }
@@ -146,21 +147,13 @@ class CardElement extends Component {
 
     let rightButton =
       cardIndex !== 3 ? (
-        <button
-          onClick={() =>
-            this.props.moveToRight(this.props.cardIndex, this.props.text)
-          }
-        >
+        <button onClick={() => this.props.moveToRight(this.props.cardIndex, this.props.text)}>
           >
         </button>
       ) : null;
     let leftButton =
       cardIndex !== 0 ? (
-        <button
-          onClick={() =>
-            this.props.moveToLeft(this.props.cardIndex, this.props.text)
-          }
-        >
+        <button onClick={() => this.props.moveToLeft(this.props.cardIndex, this.props.text)}>
           {'<'}
         </button>
       ) : null;
